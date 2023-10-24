@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuController : MonoBehaviour
+
+namespace mattordev.menu
 {
-    public string gameScene;
-
-
-    public void PlayGame()
+    public class MainMenuController : MonoBehaviour
     {
-        Debug.Log($"Loading {gameScene}");
-        SceneManager.LoadScene(gameScene);
-    }
+        public string gameScene;
 
-    public void QuitGame()
-    {
-        Debug.Log("Quitting game");
-        Application.Quit();
+        public void PlayGame()
+        {
+            Debug.Log($"Loading {gameScene}");
+            SceneManager.LoadScene(gameScene);
+        }
+
+        public void QuitGame()
+        {
+            Debug.Log("Quitting game");
+            Application.Quit();
+        }
     }
 }

@@ -2,25 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraOrbit : MonoBehaviour
+namespace mattordev.menu
 {
-    public float speed; // The speed of the orbit
-    public GameObject mainCamera;
-    public GameObject orbitPoint;
-    public bool doOrbit;
-
-    // Update is called once per frame
-    void Update()
+    public class CameraOrbit : MonoBehaviour
     {
-        if (doOrbit)
+        public float speed; // The speed of the orbit
+        public GameObject mainCamera;
+        public GameObject orbitPoint;
+        public bool doOrbit;
+
+        // Update is called once per frame
+        void Update()
         {
-            OrbitCamera();
+            if (doOrbit)
+            {
+                OrbitCamera();
+            }
+        }
+
+        public void OrbitCamera()
+        {
+            transform.RotateAround(orbitPoint.transform.position, Vector3.down, speed * Time.deltaTime);
+            transform.LookAt(orbitPoint.transform.position);
         }
     }
-
-    public void OrbitCamera()
-    {
-        transform.RotateAround(orbitPoint.transform.position, Vector3.down, speed * Time.deltaTime);
-        transform.LookAt(orbitPoint.transform.position);
-    }
 }
+
