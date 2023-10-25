@@ -12,6 +12,7 @@ namespace Mattordev.crafting
     public class CraftingManager : MonoBehaviour
     {
         private Item currentItem;
+        public string currentRecipeString;
         public Slot[] craftingSlots;
         public List<Item> itemList;
         public string[] recipes;
@@ -19,12 +20,30 @@ namespace Mattordev.crafting
         public Item[] recipeResults;
         public Slot resultSlot;
 
+        private void Update()
+        {
+            CheckForItemInSlot();
+            CheckForCreatedRecipe();
+        }
+
+        public void CheckForItemInSlot()
+        {
+            for (int i = 0; i < craftingSlots.Length; i++)
+            {
+                itemList[i] = craftingSlots[i].item;
+            }
+        }
+
+
+        /// <summary>
+        /// TODO: create item on keypress, not automatically
+        /// </summary>
         void CheckForCreatedRecipe()
         {
-            resultSlot.gameObject.SetActive(false);
+            // resultSlot.gameObject.SetActive(false);
             resultSlot.item = null;
 
-            string currentRecipeString = "";
+            currentRecipeString = "";
             // forms recipe string
             foreach (Item item in itemList)
             {
@@ -38,16 +57,26 @@ namespace Mattordev.crafting
                 }
             }
 
+            // loops through the recipies
             for (int i = 0; i < recipes.Length; i++)
             {
                 if (recipes[i] == currentRecipeString)
                 {
                     resultSlot.gameObject.SetActive(true);
                     // spawn item at result slot location
-
                     resultSlot.item = recipeResults[i];
-
+                    GameObject createdItem = Instantiate(recipeItems[i], resultSlot.transform.position, Quaternion.identity);
+                    ClearCraftingSlots();
                 }
+            }
+        }
+
+        private void ClearCraftingSlots()
+        {
+            foreach (Slot slot in craftingSlots)
+            {
+                Destroy(slot.item.gameObject);
+                itemList.Clear();
             }
         }
     }
