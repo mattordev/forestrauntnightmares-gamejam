@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-namespace mattordev.menu
+/// <author>
+/// Authored & Written by @mattordev
+/// 
+/// for external use, please contact the author directly
+/// </author>
+namespace Mattordev.menu
 {
     public class MainMenuController : MonoBehaviour
     {
