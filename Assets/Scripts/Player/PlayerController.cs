@@ -38,6 +38,9 @@ namespace Necropanda.Player
         Vector3 forward;
         RaycastHit hit;
 
+        private float minLook = 45f;
+        private float maxLook = 45f;
+
         private void Start()
         {
             paused = true;
@@ -65,6 +68,7 @@ namespace Necropanda.Player
 
             if (!paused && canMove)
             {
+
                 GetInput();
                 RotateToMouse(GetWorldPhyicsMousePosition());
             }
@@ -132,18 +136,24 @@ namespace Necropanda.Player
         public Vector3 GetWorldPhyicsMousePosition(float range = 100)
         {
             Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(camRay, out hit, range);
+            Physics.Raycast(camRay, out hit, range, groundMask);
 
             if (!hit.collider)
             {
                 return Vector3.zero;
             }
 
-            return hit.point;
+            Vector3 newPoint = hit.point; // Copy the hit point
+
+            // Clamp the X-axis rotation
+            newPoint.x = Mathf.Clamp(newPoint.x, minLook, maxLook);
+
+            return newPoint;
         }
 
         public void RotateToMouse(Vector3 pos)
         {
+
             transform.LookAt(pos);
         }
     }
